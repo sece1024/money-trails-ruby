@@ -63,3 +63,8 @@ Things you may want to cover:
     rubocop
     rubocop -a
 ```
+- security
+```shell
+    brakeman
+    bundle exec brakeman
+```
