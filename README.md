@@ -37,3 +37,10 @@ Things you may want to cover:
 ```shell
     rails generate controller Products index --skip-routes
 ```
+
+- authentication
+```shell
+    rails generate authentication
+    rails db:migrate
+    Rails console & User.create! email_address: "you@example.org", password: "s3cr3t", password_confirmation: "s3cr3t"
+```
