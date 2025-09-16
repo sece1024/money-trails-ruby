@@ -5,7 +5,7 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version: 3.4.5
 
 * System dependencies
 
@@ -22,3 +22,18 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## codesnippet
+- create model
+```shell
+    rails generate model Product name:string
+    rails db:migrate
+```
+- console
+```shell
+    rails console
+```
+- generate controller
+```shell
+    rails generate controller Products index --skip-routes
+```
