@@ -57,3 +57,9 @@ Things you may want to cover:
     bin/rails db:migrate
 
 ```
+
+- rubocop
+```shell
+    rubocop
+    rubocop -a
+```
