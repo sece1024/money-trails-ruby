@@ -49,3 +49,11 @@ Things you may want to cover:
 ```shell
     rails dev:cache
 ```
+
+- rich text
+```shell
+    bin/rails action_text:install
+    bundle install
+    bin/rails db:migrate
+
+```
