@@ -79,11 +79,14 @@ Things you may want to cover:
 
 - subscribers
 ```shell
-    rails generate model Subscriber product:belongs_to email
+    rails generate model Subscriber product:belongs_to email 
     rails db:migrate
 ```
 
 - email
 ```shell
     rails g mailer Product in_stock
+    product = Product.first
+    subscriber = product.subscribers.find_or_create_by(email: "subscriber@example.org")
+    ProductMailer.with(product: product, subscriber: subscriber).in_stock.deliver_later
 ```
