@@ -82,3 +82,8 @@ Things you may want to cover:
     rails generate model Subscriber product:belongs_to email
     rails db:migrate
 ```
+
+- email
+```shell
+    rails g mailer Product in_stock
+```
