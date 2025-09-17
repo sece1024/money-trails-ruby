@@ -3,3 +3,12 @@ zh:
   products:
     index:
       title: "产品"
+
+  activerecord:
+    attributes:
+      user:
+        password_challenge: "当前密码"
+        password: "密码"
+        password_confirmation: "确认密码"
+        email: "电子邮件"
+        name: "名称"

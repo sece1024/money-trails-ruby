@@ -20,4 +20,8 @@ Rails.application.routes.draw do
     resources :subscribers, only: [ :create ]
   end
   resource :unsubscribe, only: [ :show ]
+
+  namespace :settings do
+    resource :password, only: [ :show, :update ]
+  end
 end
