@@ -42,7 +42,8 @@ Things you may want to cover:
 ```shell
     rails generate authentication
     rails db:migrate
-    rails console & User.create! email_address: "you@example.org", password: "s3cr3t", password_confirmation: "s3cr3t"
+    rails console
+    User.create! email_address: "sece1024@gmail.com", password: "sece", password_confirmation: "sece"
 ```
 
 - cache
@@ -67,4 +68,11 @@ Things you may want to cover:
 ```shell
     brakeman
     bundle exec brakeman
+```
+
+- notification
+```shell
+    rails generate migration AddInventoryCountToProducts inventory_count:integer
+#    rails destroy migration AddInventoryCountToProducts
+    rails db:migrate
 ```
