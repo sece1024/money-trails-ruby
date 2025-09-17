@@ -36,8 +36,9 @@
     <%= link_to "Login", new_session_path %>
   <% end %>
 </nav>
+
 <main>
-  <%= yield %>
+  <%= content_for?(:content) ? yield(:content) : yield %>
 </main>
 </body>
 </html>

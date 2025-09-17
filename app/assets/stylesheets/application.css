@@ -47,3 +47,31 @@ section.product img {
     flex-basis: 50%;
     max-width: 50%;
 }
+
+nav.navbar {
+    justify-content: flex-end;
+    display: flex;
+    font-size: 0.875em;
+    gap: 0.5rem;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+nav.navbar a {
+    display: inline-block;
+}
+
+section.settings {
+    display: flex;
+    gap: 1rem;
+}
+
+section.settings nav {
+    width: 200px;
+}
+
+section.settings nav a {
+    display: block;
+}
+
