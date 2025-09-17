@@ -108,3 +108,12 @@ Things you may want to cover:
     rails generate mailer User email_confirmation
     rails db:migrate
 ```
+
+- add admin
+```shell
+    rails g migration AddAdminToUsers admin:boolean
+    rails db:migrate
+    rails dbconsole
+    UPDATE users SET admin=true WHERE users.id=1
+    .quit
+```
