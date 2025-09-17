@@ -96,3 +96,8 @@ Things you may want to cover:
     rails g migration AddNamesToUsers first_name:string last_name:string
     rails db:migrate
 ```
+- email update
+```shell
+    rails g migration AddUnconfirmedEmailToUsers unconfirmed_email:string
+    rails db:migrate
+```
