@@ -90,3 +90,9 @@ Things you may want to cover:
     subscriber = product.subscribers.find_or_create_by(email: "subscriber@example.org")
     ProductMailer.with(product: product, subscriber: subscriber).in_stock.deliver_later
 ```
+
+- add names to users
+```shell
+    rails g migration AddNamesToUsers first_name:string last_name:string
+    rails db:migrate
+```
