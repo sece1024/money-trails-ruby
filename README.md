@@ -76,3 +76,9 @@ Things you may want to cover:
 #    rails destroy migration AddInventoryCountToProducts
     rails db:migrate
 ```
+
+- subscribers
+```shell
+    rails generate model Subscriber product:belongs_to email
+    rails db:migrate
+```
