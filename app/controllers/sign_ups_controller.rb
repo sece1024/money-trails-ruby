@@ -2,6 +2,8 @@
 
 class SignUpsController < ApplicationController
   unauthenticated_access_only
+  rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to sign_up_path, alert: "Try again later." }
+
   def show
     @user = User.new
   end
