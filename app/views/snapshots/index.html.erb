@@ -61,7 +61,7 @@
                 <div class="flex space-x-2">
                   <%= link_to "查看", snapshot_path(snapshot),
                       class: "text-blue-600 hover:text-blue-800 text-sm" %>
-                  <%= link_to "删除", snapshot_path(snapshot), method: :delete,
+                  <%= button_to "删除", snapshot_path(snapshot), method: :delete,
                       data: { confirm: "确定要删除这个快照吗？" },
                       class: "text-red-600 hover:text-red-800 text-sm" %>
                 </div>
