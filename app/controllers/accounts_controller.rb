@@ -2,6 +2,7 @@ class AccountsController < ApplicationController
   def index
     # 在这里获取所有账户，并传递给视图
     @accounts = Current.user.accounts.includes(:transactions)
+    @total_asset_by_month = Current.user.snapshots.map { |snapshot| [ snapshot.snapshot_date.strftime("%Y年%m月"), snapshot.total_asset ] }
   end
 
   def show

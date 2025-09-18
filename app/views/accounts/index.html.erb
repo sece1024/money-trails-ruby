@@ -5,6 +5,7 @@
     <h1>我的账户</h1>
     <%= link_to "添加新账户", new_account_path, class: "btn btn-primary" %>
   </div>
+  <%= column_chart @total_asset_by_month %>
 
   <div class="accounts-summary">
     <div class="summary-card">
@@ -20,13 +21,13 @@
           <h3><%= account.name %></h3>
           <span class="account-type"><%= account.account_type == 'asset' ? '资产' : '负债' %></span>
         </div>
-        
+
         <div class="account-balance">
           <p class="balance-amount <%= account.account_type == 'asset' ? 'positive' : 'negative' %>">
             <%= number_to_currency(account_balance(account)) %>
           </p>
         </div>
-        
+
         <div class="account-actions">
           <%= link_to "查看详情", account_path(account), class: "btn btn-sm" %>
           <%= link_to "添加交易", new_account_transaction_path(account), class: "btn btn-sm btn-primary" %>
