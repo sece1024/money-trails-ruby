@@ -3,11 +3,11 @@
 one:
   user: one
   name: MyString
-  type: 1
+  account_type: 1
   initial_balance: 9.99
 
 two:
   user: two
   name: MyString
-  type: 1
+  account_type: 1
   initial_balance: 9.99

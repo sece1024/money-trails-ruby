@@ -20,8 +20,11 @@ class SnapshotsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create snapshot" do
     sign_in_as @user
-    assert_difference("Snapshot.count") do
-      post snapshots_url
+    # Use a different date to avoid conflicts with existing fixtures
+    travel_to 2.days.from_now do
+      assert_difference("Snapshot.count") do
+        post snapshots_url
+      end
     end
 
     assert_redirected_to snapshots_path

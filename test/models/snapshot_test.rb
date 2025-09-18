@@ -25,14 +25,16 @@ class SnapshotTest < ActiveSupport::TestCase
       description: "工资",
       amount: 5000,
       category: "收入",
-      transaction_date: Date.current
+      transaction_date: Date.current,
+      user: @user
     )
 
     liability_account.transactions.create!(
       description: "购物",
       amount: 500,
       category: "支出",
-      transaction_date: Date.current
+      transaction_date: Date.current,
+      user: @user
     )
 
     # 计算总资产
