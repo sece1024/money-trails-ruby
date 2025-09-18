@@ -15,10 +15,12 @@
 创建测试数据：
 ```shell
    rails test_data:create
+   rails test_data:enhance
 ```
 查看数据摘要：
 ```shell
    rails test_data:summary
+   rails test_data:test_growth
 ```
 清除测试数据：
 ```shell
