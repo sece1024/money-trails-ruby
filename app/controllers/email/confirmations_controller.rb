@@ -4,7 +4,7 @@ class Email::ConfirmationsController < ApplicationController
   def show
     user = User.find_by_token_for(:email_confirmation, params[:token])
     if user&.confirm_email
-      flash[:notice] = "Your email address has been confirmed."
+      flash[:notice] = "Your email has been confirmed."
     else
       flash[:alert] = "Invalid token."
     end
