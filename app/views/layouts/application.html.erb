@@ -27,7 +27,7 @@
 <div class="alert"><%= alert %></div>
 
 <nav class="navbar">
-  <%= link_to "Home", root_path %>
+  <%= link_to "Home", root_path, data: { turbo: false } %>
   <% if authenticated? %>
     <%#= link_to "Settings", settings_root_path %>
     <%= link_to "Snapshot", snapshots_path %>
