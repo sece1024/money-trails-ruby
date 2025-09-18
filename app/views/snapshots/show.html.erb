@@ -1,0 +1,101 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">快照详情</h1>
+    <%= link_to "返回列表", snapshots_path, 
+        class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-md p-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- 快照基本信息 -->
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">快照信息</h2>
+        <div class="space-y-4">
+          <div>
+            <p class="text-sm text-gray-500">快照日期</p>
+            <p class="text-lg font-medium text-gray-900">
+              <%= snapshot_date_format(@snapshot.snapshot_date) %>
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">创建时间</p>
+            <p class="text-lg font-medium text-gray-900">
+              <%= @snapshot.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">更新时间</p>
+            <p class="text-lg font-medium text-gray-900">
+              <%= @snapshot.updated_at.strftime("%Y-%m-%d %H:%M:%S") %>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 总资产信息 -->
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">总资产</h2>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-blue-600 mb-2">
+            ¥<%= format_currency(@snapshot.total_asset) %>
+          </div>
+          <p class="text-sm text-gray-500">该日期的总资产净值</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="mt-8 pt-8 border-t border-gray-200">
+      <div class="flex justify-end space-x-4">
+        <%= link_to "删除快照", snapshot_path(@snapshot), method: :delete,
+            data: { confirm: "确定要删除这个快照吗？此操作不可撤销。" },
+            class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+      </div>
+    </div>
+  </div>
+
+  <!-- 资产构成分析 -->
+  <div class="mt-8 bg-white rounded-lg shadow-md p-8">
+    <h2 class="text-xl font-semibold text-gray-800 mb-6">资产构成分析</h2>
+    
+    <% 
+      # 计算该日期的资产构成
+      asset_accounts = Current.user.accounts.asset
+      liability_accounts = Current.user.accounts.liability
+      
+      total_assets = asset_accounts.sum do |account|
+        account.initial_balance + account.transactions.where("transaction_date <= ?", @snapshot.snapshot_date).sum(:amount)
+      end
+      
+      total_liabilities = liability_accounts.sum do |account|
+        account.initial_balance + account.transactions.where("transaction_date <= ?", @snapshot.snapshot_date).sum(:amount)
+      end
+    %>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- 总资产 -->
+      <div class="text-center p-4 bg-green-50 rounded-lg">
+        <h3 class="text-lg font-semibold text-green-800 mb-2">总资产</h3>
+        <p class="text-2xl font-bold text-green-600">
+          ¥<%= format_currency(total_assets) %>
+        </p>
+      </div>
+      
+      <!-- 总负债 -->
+      <div class="text-center p-4 bg-red-50 rounded-lg">
+        <h3 class="text-lg font-semibold text-red-800 mb-2">总负债</h3>
+        <p class="text-2xl font-bold text-red-600">
+          ¥<%= format_currency(total_liabilities) %>
+        </p>
+      </div>
+      
+      <!-- 净资产 -->
+      <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <h3 class="text-lg font-semibold text-blue-800 mb-2">净资产</h3>
+        <p class="text-2xl font-bold text-blue-600">
+          ¥<%= format_currency(@snapshot.total_asset) %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

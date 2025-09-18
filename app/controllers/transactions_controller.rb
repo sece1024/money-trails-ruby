@@ -25,6 +25,6 @@ class TransactionsController < ApplicationController
   private
 
   def transaction_params
-    params.expect(transaction: [:description, :amount, :category, :transaction_date])
+    params.expect(transaction: [ :description, :amount, :category, :transaction_date ])
   end
 end

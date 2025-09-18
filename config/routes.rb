@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     resources :transactions
   end
 
+  resources :snapshots, only: [ :index, :show, :create, :destroy ]
+
   resources :products do
     resources :subscribers, only: [ :create ]
   end

@@ -1,11 +1,14 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
   user: one
-  snapshot_date: 2025-09-18
-  total_asset: 9.99
+  snapshot_date: <%= Date.current %>
+  total_asset: 50000
 
 two:
+  user: one
+  snapshot_date: <%= 1.day.ago %>
+  total_asset: 48000
+
+three:
   user: two
-  snapshot_date: 2025-09-18
-  total_asset: 9.99
+  snapshot_date: <%= Date.current %>
+  total_asset: 75000
