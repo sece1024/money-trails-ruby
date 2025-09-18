@@ -2,7 +2,33 @@ class AccountsController < ApplicationController
   def index
     # 在这里获取所有账户，并传递给视图
     @accounts = Current.user.accounts.includes(:transactions)
-    @total_asset_by_month = Current.user.snapshots.map { |snapshot| [ snapshot.snapshot_date.strftime("%Y年%m月"), snapshot.total_asset ] }
+
+    # 准备多种图表数据
+    snapshots = Current.user.snapshots
+
+    # 总资产趋势图（折线图）
+    @total_asset_by_month = snapshots.map { |snapshot|
+      [ snapshot.snapshot_date.strftime("%y-%m"), snapshot.total_asset ]
+    }
+
+    # 资产分布饼图数据
+    @asset_distribution = @accounts.asset.map do |account|
+      balance = account.initial_balance + account.transactions.sum(:amount)
+      [ account.name, balance ] if balance > 0
+    end.compact
+
+    # 负债分布饼图数据
+    @liability_distribution = @accounts.liability.map do |account|
+      balance = account.initial_balance + account.transactions.sum(:amount)
+      [ account.name, balance.abs ] if balance < 0
+    end.compact
+
+    # 月度变化柱状图数据
+    @monthly_changes = []
+    snapshots.each_cons(2) do |prev_snapshot, current_snapshot|
+      change = current_snapshot.total_asset - prev_snapshot.total_asset
+      @monthly_changes << [ current_snapshot.snapshot_date.strftime("%Y年%m月"), change ]
+    end
   end
 
   def show

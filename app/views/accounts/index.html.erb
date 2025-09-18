@@ -5,7 +5,46 @@
     <h1>我的账户</h1>
     <%= link_to "添加新账户", new_account_path, class: "btn btn-primary" %>
   </div>
-  <%= column_chart @total_asset_by_month %>
+
+  <!-- 图表切换区域 -->
+  <div class="charts-section">
+    <div class="chart-tabs">
+      <button class="chart-tab active" data-chart="trend">资产趋势</button>
+      <button class="chart-tab" data-chart="assets">资产分布</button>
+      <button class="chart-tab" data-chart="liabilities">负债分布</button>
+      <button class="chart-tab" data-chart="changes">月度变化</button>
+    </div>
+    
+    <div class="chart-container">
+      <div id="trend-chart" class="chart-content active">
+        <%= line_chart @total_asset_by_month, 
+            title: "总资产趋势", 
+            colors: ["#4CAF50"],
+            height: "400px" %>
+      </div>
+      
+      <div id="assets-chart" class="chart-content">
+        <%= pie_chart @asset_distribution, 
+            title: "资产分布", 
+            colors: ["#2196F3", "#4CAF50", "#FF9800", "#9C27B0", "#F44336"],
+            height: "400px" %>
+      </div>
+      
+      <div id="liabilities-chart" class="chart-content">
+        <%= pie_chart @liability_distribution, 
+            title: "负债分布", 
+            colors: ["#F44336", "#FF5722", "#E91E63", "#9C27B0", "#673AB7"],
+            height: "400px" %>
+      </div>
+      
+      <div id="changes-chart" class="chart-content">
+        <%= column_chart @monthly_changes, 
+            title: "月度资产变化", 
+            colors: ["#4CAF50"],
+            height: "400px" %>
+      </div>
+    </div>
+  </div>
 
   <div class="accounts-summary">
     <div class="summary-card">
@@ -45,3 +84,24 @@
     </div>
   <% end %>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const chartTabs = document.querySelectorAll('.chart-tab');
+  const chartContents = document.querySelectorAll('.chart-content');
+  
+  chartTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      const targetChart = this.getAttribute('data-chart');
+      
+      // 移除所有active类
+      chartTabs.forEach(t => t.classList.remove('active'));
+      chartContents.forEach(c => c.classList.remove('active'));
+      
+      // 添加active类到当前选中的元素
+      this.classList.add('active');
+      document.getElementById(targetChart + '-chart').classList.add('active');
+    });
+  });
+});
+</script>

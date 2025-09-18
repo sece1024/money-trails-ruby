@@ -96,6 +96,15 @@ namespace :test_data do
     end_date = Date.current
 
     transaction_count = 0
+    snapshot_count = 0
+
+    # 生成快照日期（每周一次，过去52周）
+    snapshot_dates = []
+    52.times do |i|
+      date = (51 - i).weeks.ago.to_date
+      snapshot_dates << date if date >= start_date && date <= end_date
+    end
+    snapshot_dates.sort!
 
     (start_date..end_date).each do |date|
       # 跳过未来日期
@@ -155,30 +164,18 @@ namespace :test_data do
           transaction_count += 1
         end
       end
+
+      # 如果今天是快照日期，创建快照
+      if snapshot_dates.include?(date)
+        # 避免重复创建同一天的快照
+        unless user.snapshots.exists?(snapshot_date: date)
+          snapshot = Snapshot.create_or_update_for_date(user, date)
+          snapshot_count += 1
+        end
+      end
     end
 
     puts "Created transactions: #{transaction_count} transactions"
-
-    # 创建更频繁的快照数据（每周一次，过去52周）
-    # 但需要按时间顺序创建，确保资产增长趋势正确
-    snapshot_count = 0
-    snapshot_dates = []
-
-    # 生成52周的日期（从最早到最新）
-    52.times do |i|
-      date = (51 - i).weeks.ago.to_date
-      snapshot_dates << date
-    end
-
-    # 按时间顺序创建快照
-    snapshot_dates.sort.each do |date|
-      # 避免重复创建同一天的快照
-      next if user.snapshots.exists?(snapshot_date: date)
-
-      snapshot = Snapshot.create_or_update_for_date(user, date)
-      snapshot_count += 1
-    end
-
     puts "Created snapshots: #{snapshot_count} snapshots"
 
     puts "\n=== Test Data Summary ==="
@@ -277,7 +274,8 @@ namespace :test_data do
       { date: 3.months.ago, category: "家具", amount: -6000, account: "招商银行信用卡" }
     ]
 
-    special_transactions.each do |txn_data|
+    # 按时间顺序创建特殊交易和快照
+    special_transactions.sort_by { |txn| txn[:date] }.each do |txn_data|
       account = test_user.accounts.find_by(name: txn_data[:account])
       next unless account
 
@@ -295,12 +293,20 @@ namespace :test_data do
         category: txn_data[:category],
         transaction_date: txn_data[:date]
       )
+
+      # 如果交易日期是快照日期，创建或更新快照
+      snapshot_dates = []
+      52.times do |i|
+        date = (51 - i).weeks.ago.to_date
+        snapshot_dates << date
+      end
+
+      if snapshot_dates.include?(txn_data[:date])
+        Snapshot.create_or_update_for_date(test_user, txn_data[:date])
+      end
     end
 
-    # 重新生成快照以确保数据一致性
-    test_user.snapshots.destroy_all
-
-    # 按时间顺序重新生成快照
+    # 确保所有快照日期都有快照
     snapshot_dates = []
     52.times do |i|
       date = (51 - i).weeks.ago.to_date
@@ -308,7 +314,9 @@ namespace :test_data do
     end
 
     snapshot_dates.sort.each do |date|
-      Snapshot.create_or_update_for_date(test_user, date)
+      unless test_user.snapshots.exists?(snapshot_date: date)
+        Snapshot.create_or_update_for_date(test_user, date)
+      end
     end
 
     puts "Enhanced test data with special transactions"

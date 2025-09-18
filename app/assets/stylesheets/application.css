@@ -574,6 +574,65 @@ section.settings nav a {
     margin: 0 0 1rem 0;
 }
 
+/* 图表切换样式 */
+.charts-section {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.chart-tabs {
+    display: flex;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.chart-tab {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: none;
+    background: transparent;
+    color: #666;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.chart-tab:hover {
+    background-color: #e9ecef;
+    color: #333;
+}
+
+.chart-tab.active {
+    background-color: white;
+    color: #007bff;
+    border-bottom-color: #007bff;
+}
+
+.chart-container {
+    position: relative;
+    min-height: 400px;
+}
+
+.chart-content {
+    display: none;
+    padding: 1.5rem;
+}
+
+.chart-content.active {
+    display: block;
+}
+
+/* 图表容器内的样式调整 */
+.chart-content .chartjs-render-monitor {
+    margin: 0 auto;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
     .accounts-header,
@@ -604,6 +663,20 @@ section.settings nav a {
     
     .form-actions {
         flex-direction: column;
+    }
+    
+    .chart-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .chart-tab {
+        flex: 1 1 50%;
+        padding: 0.75rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .chart-content {
+        padding: 1rem;
     }
 }
 
