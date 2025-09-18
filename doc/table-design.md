@@ -25,6 +25,8 @@
 | `created_at` | `DATETIME` | 用户创建时间。 |
 | `updated_at` | `DATETIME` | 用户信息更新时间。 |
 
+`rails generate migration AddUsernameToUsers username:string`
+
 #### 2. `Accounts` 表
 
 这个表用于管理所有**资产账户**和**负债账户**。
