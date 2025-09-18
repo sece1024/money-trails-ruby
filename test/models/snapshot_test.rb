@@ -7,14 +7,22 @@ class SnapshotTest < ActiveSupport::TestCase
   end
 
   test "should calculate total asset correctly" do
+    # 创建一个新的测试用户来避免fixture干扰
+    test_user = User.create!(
+      email_address: "test@example.com",
+      password_digest: BCrypt::Password.create("password"),
+      first_name: "Test",
+      last_name: "User"
+    )
+
     # 创建资产账户和负债账户
-    asset_account = @user.accounts.create!(
+    asset_account = test_user.accounts.create!(
       name: "银行账户",
       account_type: "asset",
       initial_balance: 10000
     )
 
-    liability_account = @user.accounts.create!(
+    liability_account = test_user.accounts.create!(
       name: "信用卡",
       account_type: "liability",
       initial_balance: 2000
@@ -26,7 +34,7 @@ class SnapshotTest < ActiveSupport::TestCase
       amount: 5000,
       category: "收入",
       transaction_date: Date.current,
-      user: @user
+      user: test_user
     )
 
     liability_account.transactions.create!(
@@ -34,11 +42,11 @@ class SnapshotTest < ActiveSupport::TestCase
       amount: 500,
       category: "支出",
       transaction_date: Date.current,
-      user: @user
+      user: test_user
     )
 
     # 计算总资产
-    total_asset = Snapshot.calculate_total_asset(@user)
+    total_asset = Snapshot.calculate_total_asset(test_user)
     expected_total = (10000 + 5000) - (2000 + 500) # 15000 - 2500 = 12500
     assert_equal expected_total, total_asset
   end
@@ -53,14 +61,22 @@ class SnapshotTest < ActiveSupport::TestCase
   end
 
   test "should validate uniqueness of snapshot date per user" do
+    # 使用一个没有现有快照的用户来避免fixture干扰
+    test_user = User.create!(
+      email_address: "uniqueness_test@example.com",
+      password_digest: BCrypt::Password.create("password"),
+      first_name: "Uniqueness",
+      last_name: "Test"
+    )
+
     Snapshot.create!(
-      user: @user,
+      user: test_user,
       snapshot_date: Date.current,
       total_asset: 10000
     )
 
     duplicate_snapshot = Snapshot.new(
-      user: @user,
+      user: test_user,
       snapshot_date: Date.current,
       total_asset: 15000
     )

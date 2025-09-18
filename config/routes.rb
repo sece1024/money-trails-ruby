@@ -1,14 +1,4 @@
 Rails.application.routes.draw do
-  get "transactions/index"
-  get "transactions/new"
-  get "transactions/create"
-  get "accounts/index"
-  get "accounts/show"
-  get "accounts/new"
-  get "accounts/create"
-  get "accounts/edit"
-  get "accounts/update"
-  get "accounts/destroy"
   resource :session
   resources :passwords, param: :token
   resource :sign_up
