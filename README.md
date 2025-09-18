@@ -1,27 +1,43 @@
 # README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
+## Requirements
 * Ruby version: 3.4.5
 
-* System dependencies
+## local deployment
+### Setup
+```shell
+  gem
+  rails db:migrate
+  rails s
+```
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### create test data
+#### 使用方法
+创建测试数据：
+```shell
+   rails test_data:create
+```
+查看数据摘要：
+```shell
+   rails test_data:summary
+```
+清除测试数据：
+```shell
+   rails test_data:clear
+```
+生成的测试数据包括
+- 测试用户：
+  - 邮箱：test@example.com
+  - 密码：password123
+  - 姓名：测试用户
+  - 用户名：testuser
+- 5个账户：
+  - 支票账户（资产）：初始余额 5,000
+  - 储蓄账户（资产）：初始余额 20,000
+  - 投资账户（资产）：初始余额 50,000
+  - 信用卡（负债）：初始余额 -2,000
+  - 房贷（负债）：初始余额 -300,000
+  - 30笔交易记录：过去30天的随机交易数据
+  - 8个快照：过去8周每周的财务快照
 
 ## codesnippet
 - create model
