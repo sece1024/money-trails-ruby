@@ -1,4 +1,8 @@
-<%= form_with model: @product do |form| %>
+<%= form_with model: [ :store, product] do |form| %>
+  <% if form.object.errors.any? %>
+    <div>Error: <%= form.object.errors.full_messages.first %></div>
+  <% end %>
+
   <div>
     <%= form.label :name %>
     <%= form.text_field :name %>

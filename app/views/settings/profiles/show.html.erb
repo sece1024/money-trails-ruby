@@ -1,0 +1,22 @@
+<h1>Profile</h1>
+
+
+<%= form_with model: Current.user, url: settings_profile_path do |form| %>
+  <% if form.object.errors.any? %>
+    <div><%= form.object.errors.full_messages.first %></div>
+  <% end %>
+
+  <div>
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name, required: true, autocomplete: "given-password" %>
+  </div>
+
+  <div>
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name, required: true, autocomplete: "family-password" %>
+  </div>
+
+  <div>
+    <%= form.submit "Update profile" %>
+  </div>
+<% end %>
