@@ -1,2 +1,61 @@
-<h1>Accounts#show</h1>
-<p>Find me in app/views/accounts/show.html.erb</p>
+<% content_for :title, @account.name %>
+
+<div class="account-detail">
+  <div class="account-header">
+    <h1><%= @account.name %></h1>
+    <span class="account-type-badge <%= @account.account_type %>">
+      <%= @account.account_type == 'asset' ? '资产账户' : '负债账户' %>
+    </span>
+  </div>
+
+  <div class="account-info">
+    <div class="info-card">
+      <h3>当前余额</h3>
+      <p class="balance-display <%= @account.account_type == 'asset' ? 'positive' : 'negative' %>">
+        <%= number_to_currency(account_balance(@account)) %>
+      </p>
+    </div>
+    
+    <div class="info-card">
+      <h3>初始余额</h3>
+      <p><%= number_to_currency(@account.initial_balance) %></p>
+    </div>
+    
+    <div class="info-card">
+      <h3>交易次数</h3>
+      <p><%= @account.transactions.count %> 笔</p>
+    </div>
+  </div>
+
+  <div class="account-actions">
+    <%= link_to "添加交易", new_account_transaction_path(@account), class: "btn btn-primary" %>
+    <%= link_to "编辑账户", edit_account_path(@account), class: "btn btn-secondary" %>
+    <%= link_to "返回账户列表", accounts_path, class: "btn btn-outline" %>
+  </div>
+
+  <div class="recent-transactions">
+    <h2>最近交易</h2>
+    <% if @account.transactions.any? %>
+      <div class="transactions-list">
+        <% @account.transactions.order(transaction_date: :desc).limit(10).each do |transaction| %>
+          <div class="transaction-item">
+            <div class="transaction-info">
+              <h4><%= transaction.description %></h4>
+              <p class="transaction-category"><%= transaction.category %></p>
+              <p class="transaction-date"><%= transaction.transaction_date.strftime("%Y-%m-%d") %></p>
+            </div>
+            <div class="transaction-amount <%= transaction.amount >= 0 ? 'positive' : 'negative' %>">
+              <%= number_to_currency(transaction.amount) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <%= link_to "查看所有交易", account_transactions_path(@account), class: "btn btn-outline" %>
+    <% else %>
+      <div class="empty-state">
+        <p>还没有交易记录</p>
+        <%= link_to "添加第一笔交易", new_account_transaction_path(@account), class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

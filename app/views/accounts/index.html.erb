@@ -1,2 +1,46 @@
-<h1>Accounts#index</h1>
-<p>Find me in app/views/accounts/index.html.erb</p>
+<% content_for :title, "我的账户" %>
+
+<div class="accounts-container">
+  <div class="accounts-header">
+    <h1>我的账户</h1>
+    <%= link_to "添加新账户", new_account_path, class: "btn btn-primary" %>
+  </div>
+
+  <div class="accounts-summary">
+    <div class="summary-card">
+      <h3>总资产</h3>
+      <p class="total-assets"><%= number_to_currency(total_assets(@accounts)) %></p>
+    </div>
+  </div>
+
+  <div class="accounts-grid">
+    <% @accounts.each do |account| %>
+      <div class="account-card <%= account.account_type %>">
+        <div class="account-header">
+          <h3><%= account.name %></h3>
+          <span class="account-type"><%= account.account_type == 'asset' ? '资产' : '负债' %></span>
+        </div>
+        
+        <div class="account-balance">
+          <p class="balance-amount <%= account.account_type == 'asset' ? 'positive' : 'negative' %>">
+            <%= number_to_currency(account_balance(account)) %>
+          </p>
+        </div>
+        
+        <div class="account-actions">
+          <%= link_to "查看详情", account_path(account), class: "btn btn-sm" %>
+          <%= link_to "添加交易", new_account_transaction_path(account), class: "btn btn-sm btn-primary" %>
+          <%= link_to "编辑", edit_account_path(account), class: "btn btn-sm btn-secondary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @accounts.empty? %>
+    <div class="empty-state">
+      <h3>还没有账户</h3>
+      <p>开始你的记账之旅，添加第一个账户吧！</p>
+      <%= link_to "添加账户", new_account_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

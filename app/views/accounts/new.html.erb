@@ -1,2 +1,51 @@
-<h1>Accounts#new</h1>
-<p>Find me in app/views/accounts/new.html.erb</p>
+<% content_for :title, "添加新账户" %>
+
+<div class="form-container">
+  <div class="form-header">
+    <h1>添加新账户</h1>
+    <%= link_to "返回账户列表", accounts_path, class: "btn btn-outline" %>
+  </div>
+
+  <%= form_with model: @account, local: true, class: "account-form" do |form| %>
+    <% if @account.errors.any? %>
+      <div class="error-messages">
+        <h3>请修正以下错误：</h3>
+        <ul>
+          <% @account.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :name, "账户名称", class: "form-label" %>
+      <%= form.text_field :name, class: "form-input", placeholder: "例如：招商银行卡、支付宝、花呗" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :account_type, "账户类型", class: "form-label" %>
+      <%= form.select :account_type, 
+          options_for_select([
+            ['资产账户 (存款、现金等)', 'asset'], 
+            ['负债账户 (信用卡、贷款等)', 'liability']
+          ], @account.account_type), 
+          { prompt: '请选择账户类型' }, 
+          { class: "form-select" } %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :initial_balance, "初始余额", class: "form-label" %>
+      <%= form.number_field :initial_balance, 
+          step: 0.01, 
+          class: "form-input", 
+          placeholder: "0.00" %>
+      <small class="form-help">请输入账户的初始余额，正数表示存款，负数表示欠款</small>
+    </div>
+
+    <div class="form-actions">
+      <%= form.submit "创建账户", class: "btn btn-primary" %>
+      <%= link_to "取消", accounts_path, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>
