@@ -97,3 +97,8 @@
 * 这样，当用户查看历史趋势图时，你只需要从 `Snapshots` 表中查询数据，而不需要实时进行复杂的计算，大大提高了性能。
 
 这个数据模型设计简洁且功能完整，完全可以支持你个人记账应用的核心功能，并为未来的扩展（如预算、报表等）打下坚实的基础。
+
+
+## route & controller
+`rails g controller Accounts index show new create edit update destroy`
+`rails g controller Transactions index new create`

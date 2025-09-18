@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  get "transactions/index"
+  get "transactions/new"
+  get "transactions/create"
+  get "accounts/index"
+  get "accounts/show"
+  get "accounts/new"
+  get "accounts/create"
+  get "accounts/edit"
+  get "accounts/update"
+  get "accounts/destroy"
   resource :session
   resources :passwords, param: :token
   resource :sign_up
@@ -15,7 +25,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
 
 
-  root "products#index"
+  # root "products#index"
+  root "accounts#index"
+
+  resources :accounts do
+    resources :transactions
+  end
+
   resources :products do
     resources :subscribers, only: [ :create ]
   end
