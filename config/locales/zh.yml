@@ -3,7 +3,10 @@ zh:
   products:
     index:
       title: "产品"
-
+  store:
+    products:
+      index:
+        title: "产品"
   activerecord:
     attributes:
       user:
