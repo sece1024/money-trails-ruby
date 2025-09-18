@@ -1,0 +1,87 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">资产快照</h1>
+    <%= button_to "创建今日快照", snapshots_path, method: :post,
+        class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+  </div>
+
+  <!-- 当前总资产显示 -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">当前总资产</h2>
+    <div class="text-3xl font-bold text-green-600">
+      ¥<%= format_currency(@total_asset_today) %>
+    </div>
+    <p class="text-sm text-gray-500 mt-2">基于所有账户的实时计算</p>
+  </div>
+
+  <!-- 最新快照信息 -->
+  <% if @latest_snapshot %>
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">最新快照</h2>
+      <div class="flex justify-between items-center">
+        <div>
+          <p class="text-sm text-gray-500">快照日期</p>
+          <p class="text-lg font-medium"><%= snapshot_date_format(@latest_snapshot.snapshot_date) %></p>
+        </div>
+        <div class="text-right">
+          <p class="text-sm text-gray-500">总资产</p>
+          <p class="text-2xl font-bold text-blue-600">
+            ¥<%= format_currency(@latest_snapshot.total_asset) %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- 快照历史列表 -->
+  <div class="bg-white rounded-lg shadow-md">
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h2 class="text-xl font-semibold text-gray-800">快照历史</h2>
+    </div>
+
+    <% if @snapshots.any? %>
+      <div class="divide-y divide-gray-200">
+        <% @snapshots.each do |snapshot| %>
+          <div class="px-6 py-4 hover:bg-gray-50">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-lg font-medium text-gray-900">
+                  <%= snapshot_date_format(snapshot.snapshot_date) %>
+                </p>
+                <p class="text-sm text-gray-500">
+                  <%= snapshot_datetime_format(snapshot.created_at) %> 创建
+                </p>
+              </div>
+              <div class="flex items-center space-x-4">
+                <div class="text-right">
+                  <p class="text-xl font-bold text-gray-900">
+                    ¥<%= format_currency(snapshot.total_asset) %>
+                  </p>
+                </div>
+                <div class="flex space-x-2">
+                  <%= link_to "查看", snapshot_path(snapshot),
+                      class: "text-blue-600 hover:text-blue-800 text-sm" %>
+                  <%= button_to "删除", snapshot_path(snapshot), method: :delete,
+                      data: { confirm: "确定要删除这个快照吗？" },
+                      class: "text-red-600 hover:text-red-800 text-sm" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="px-6 py-8 text-center">
+        <p class="text-gray-500">还没有创建任何快照</p>
+        <p class="text-sm text-gray-400 mt-2">点击"创建今日快照"按钮开始记录您的资产变化</p>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- 显示限制提示 -->
+  <% if @snapshots.count >= 50 %>
+    <div class="mt-8 text-center">
+      <p class="text-sm text-gray-500">显示最近50条快照记录</p>
+    </div>
+  <% end %>
+</div>

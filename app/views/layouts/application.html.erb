@@ -29,7 +29,8 @@
 <nav class="navbar">
   <%= link_to "Home", root_path %>
   <% if authenticated? %>
-    <%= link_to "Settings", settings_root_path %>
+    <%#= link_to "Settings", settings_root_path %>
+    <%= link_to "Snapshot", snapshots_path %>
     <%= button_to "Log out", session_path, method: :delete %>
   <% else %>
     <%= link_to "Sign up", sign_up_path %>

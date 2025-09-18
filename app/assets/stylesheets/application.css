@@ -75,3 +75,535 @@ section.settings nav a {
     display: block;
 }
 
+/* ===== 个人记账软件样式 ===== */
+
+/* 通用样式 */
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0.25rem;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+
+.btn-outline:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* 账户相关样式 */
+.accounts-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.accounts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.accounts-header h1 {
+    margin: 0;
+    color: #333;
+}
+
+.accounts-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.summary-card h3 {
+    margin: 0 0 0.5rem 0;
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.total-assets {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #28a745;
+    margin: 0;
+}
+
+.accounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.account-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.account-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.account-card.asset {
+    border-left: 4px solid #28a745;
+}
+
+.account-card.liability {
+    border-left: 4px solid #dc3545;
+}
+
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.account-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.account-type {
+    background-color: #f8f9fa;
+    color: #666;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+}
+
+.account-balance {
+    margin-bottom: 1rem;
+}
+
+.balance-amount {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.balance-amount.positive {
+    color: #28a745;
+}
+
+.balance-amount.negative {
+    color: #dc3545;
+}
+
+.account-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* 账户详情页样式 */
+.account-detail {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.account-detail .account-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.account-detail h1 {
+    margin: 0;
+    color: #333;
+}
+
+.account-type-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.account-type-badge.asset {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.account-type-badge.liability {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.account-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.info-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.info-card h3 {
+    margin: 0 0 0.5rem 0;
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.balance-display {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.balance-display.positive {
+    color: #28a745;
+}
+
+.balance-display.negative {
+    color: #dc3545;
+}
+
+.account-actions {
+    margin-bottom: 2rem;
+}
+
+.recent-transactions h2 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.transactions-list {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-info h4 {
+    margin: 0 0 0.25rem 0;
+    color: #333;
+}
+
+.transaction-category {
+    color: #666;
+    font-size: 0.875rem;
+    margin: 0 0 0.25rem 0;
+}
+
+.transaction-date {
+    color: #999;
+    font-size: 0.75rem;
+    margin: 0;
+}
+
+.transaction-amount {
+    font-weight: bold;
+    font-size: 1.125rem;
+}
+
+.transaction-amount.positive {
+    color: #28a745;
+}
+
+.transaction-amount.negative {
+    color: #dc3545;
+}
+
+/* 交易列表页样式 */
+.transactions-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.transactions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.transactions-header h1 {
+    margin: 0;
+    color: #333;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.account-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.transactions-table {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 80px 1fr 100px 120px;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    font-weight: bold;
+    color: #666;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 100px 120px;
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    align-items: center;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-row:hover {
+    background-color: #f8f9fa;
+}
+
+.col-date {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.col-description strong {
+    color: #333;
+}
+
+.category-tag {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+}
+
+.col-amount {
+    text-align: right;
+    font-weight: bold;
+}
+
+.col-amount.positive {
+    color: #28a745;
+}
+
+.col-amount.negative {
+    color: #dc3545;
+}
+
+/* 表单样式 */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.form-header h1 {
+    margin: 0;
+    color: #333;
+}
+
+.account-form,
+.transaction-form {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-help {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.error-messages {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.error-messages h3 {
+    margin: 0 0 0.5rem 0;
+    color: #721c24;
+    font-size: 1rem;
+}
+
+.error-messages ul {
+    margin: 0;
+    padding-left: 1rem;
+    color: #721c24;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #666;
+}
+
+.empty-state h3 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+}
+
+.empty-state p {
+    margin: 0 0 1rem 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .accounts-header,
+    .transactions-header,
+    .form-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .accounts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .accounts-summary,
+    .account-summary {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    .table-header,
+    .table-row {
+        grid-template-columns: 60px 1fr 80px 100px;
+    }
+    
+    .account-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+}
+

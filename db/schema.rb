@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_17_091222) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_18_071226) do
+  create_table "accounts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "name"
+    t.integer "account_type"
+    t.decimal "initial_balance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
+
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -65,12 +75,34 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_091222) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "snapshots", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "snapshot_date"
+    t.decimal "total_asset"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_snapshots_on_user_id"
+  end
+
   create_table "subscribers", force: :cascade do |t|
     t.integer "product_id", null: false
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_subscribers_on_product_id"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "account_id", null: false
+    t.string "description"
+    t.decimal "amount"
+    t.string "category"
+    t.date "transaction_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_transactions_on_account_id"
+    t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -82,11 +114,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_091222) do
     t.string "last_name"
     t.string "unconfirmed_email"
     t.boolean "admin"
+    t.string "username"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "accounts", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "sessions", "users"
+  add_foreign_key "snapshots", "users"
   add_foreign_key "subscribers", "products"
+  add_foreign_key "transactions", "accounts"
+  add_foreign_key "transactions", "users"
 end

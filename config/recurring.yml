@@ -13,3 +13,18 @@ production:
   clear_solid_queue_finished_jobs:
     command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
     schedule: every hour at minute 12
+
+  # 每日快照任务 - 每天凌晨1点执行
+#  daily_snapshots:
+#    command: "Snapshot.create_daily_snapshots"
+#    schedule: at 1am every day
+
+  # 每周快照任务 - 每周一凌晨2点执行
+#  weekly_snapshots:
+#    command: "Snapshot.create_weekly_snapshots"
+#    schedule: at 2am every monday
+
+  # 每月快照任务 - 每月1号凌晨3点执行
+  monthly_snapshots:
+    command: "Snapshot.create_monthly_snapshots"
+    schedule: at 3am on day 1 of month

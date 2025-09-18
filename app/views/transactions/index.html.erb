@@ -1,0 +1,78 @@
+<% content_for :title, "#{@account.name} - 交易记录" %>
+
+<div class="transactions-container">
+  <div class="transactions-header">
+    <h1><%= @account.name %> - 交易记录</h1>
+    <div class="header-actions">
+      <%= link_to "添加交易", new_account_transaction_path(@account), class: "btn btn-primary" %>
+      <%= link_to "返回账户", account_path(@account), class: "btn btn-outline" %>
+    </div>
+  </div>
+
+  <div class="account-summary">
+    <div class="summary-card">
+      <h3>当前余额</h3>
+      <p class="balance-display <%= @account.account_type == 'asset' ? 'positive' : 'negative' %>">
+        <%= number_to_currency(account_balance(@account)) %>
+      </p>
+    </div>
+
+    <div class="summary-card">
+      <h3>交易总数</h3>
+      <p><%= @transactions.count %> 笔</p>
+    </div>
+
+    <div class="summary-card">
+      <h3>总收入</h3>
+      <p class="positive"><%= number_to_currency(@transactions.where('amount > 0').sum(:amount)) %></p>
+    </div>
+
+    <div class="summary-card">
+      <h3>总支出</h3>
+      <p class="negative"><%= number_to_currency(@transactions.where('amount < 0').sum(:amount)) %></p>
+    </div>
+  </div>
+
+  <% if @transactions.any? %>
+    <div class="transactions-list">
+      <div class="list-header">
+        <h2>交易明细</h2>
+        <div class="filter-options">
+          <!-- 可以添加筛选功能 -->
+        </div>
+      </div>
+
+      <div class="transactions-table">
+        <div class="table-header">
+          <div class="col-date">日期</div>
+          <div class="col-description">描述</div>
+          <div class="col-category">类别</div>
+          <div class="col-amount">金额</div>
+        </div>
+
+        <% @transactions.order(transaction_date: :desc).each do |transaction| %>
+          <div class="table-row">
+            <div class="col-date">
+              <%= transaction.transaction_date.strftime("%m-%d") %>
+            </div>
+            <div class="col-description">
+              <strong><%= transaction.description %></strong>
+            </div>
+            <div class="col-category">
+              <span class="category-tag"><%= transaction.category %></span>
+            </div>
+            <div class="col-amount <%= transaction.amount >= 0 ? 'positive' : 'negative' %>">
+              <%= transaction.amount >= 0 ? '+' : '' %><%= number_to_currency(transaction.amount) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <h3>还没有交易记录</h3>
+      <p>开始记录你的第一笔交易吧！</p>
+      <%= link_to "添加交易", new_account_transaction_path(@account), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

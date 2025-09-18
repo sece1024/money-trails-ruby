@@ -1,0 +1,68 @@
+<% content_for :title, "添加交易" %>
+
+<div class="form-container">
+  <div class="form-header">
+    <h1>添加交易 - <%= @account.name %></h1>
+    <%= link_to "返回交易列表", account_transactions_path(@account), class: "btn btn-outline" %>
+  </div>
+
+  <%= form_with model: [@account, @transaction], local: true, class: "transaction-form" do |form| %>
+    <% if @transaction.errors.any? %>
+      <div class="error-messages">
+        <h3>请修正以下错误：</h3>
+        <ul>
+          <% @transaction.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :description, "交易描述", class: "form-label" %>
+      <%= form.text_field :description, class: "form-input", placeholder: "例如：超市购物、工资、房租等" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :amount, "交易金额", class: "form-label" %>
+      <%= form.number_field :amount, 
+          step: 0.01, 
+          class: "form-input", 
+          placeholder: "正数为收入，负数为支出" %>
+      <small class="form-help">
+        收入请输入正数（如：1000），支出请输入负数（如：-50）
+      </small>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :category, "交易类别", class: "form-label" %>
+      <%= form.select :category, 
+          options_for_select([
+            ['餐饮', '餐饮'],
+            ['交通', '交通'],
+            ['购物', '购物'],
+            ['娱乐', '娱乐'],
+            ['医疗', '医疗'],
+            ['教育', '教育'],
+            ['工资', '工资'],
+            ['奖金', '奖金'],
+            ['投资', '投资'],
+            ['其他', '其他']
+          ], @transaction.category),
+          { prompt: '请选择交易类别' },
+          { class: "form-select" } %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :transaction_date, "交易日期", class: "form-label" %>
+      <%= form.date_field :transaction_date, 
+          value: Date.current,
+          class: "form-input" %>
+    </div>
+
+    <div class="form-actions">
+      <%= form.submit "添加交易", class: "btn btn-primary" %>
+      <%= link_to "取消", account_transactions_path(@account), class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>
