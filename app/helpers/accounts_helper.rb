@@ -17,13 +17,13 @@ module AccountsHelper
   end
 
   # 获取账户类型的显示文本
-  def account_type_display(type)
-    type == "asset" ? "资产" : "负债"
+  def account_type_display(account_type)
+    account_type == "asset" ? "资产" : "负债"
   end
 
   # 获取账户类型的CSS类
-  def account_type_class(type)
-    type == "asset" ? "asset-account" : "liability-account"
+  def account_type_class(account_type)
+    account_type == "asset" ? "asset-account" : "liability-account"
   end
 
   # 获取金额的CSS类（正数/负数）
