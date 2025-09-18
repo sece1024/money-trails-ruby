@@ -14,6 +14,7 @@ class TransactionsController < ApplicationController
   def create
     @account = Current.user.accounts.find(params[:account_id])
     @transaction = @account.transactions.new(transaction_params)
+    @transaction.user = Current.user
     if @transaction.save
       redirect_to account_transactions_path(@account), notice: "交易记录成功！"
     else
@@ -24,6 +25,6 @@ class TransactionsController < ApplicationController
   private
 
   def transaction_params
-    params.require(:transaction).permit(:description, :amount, :category, :transaction_date)
+    params.expect(transaction: [:description, :amount, :category, :transaction_date])
   end
 end

@@ -6,5 +6,5 @@ class Account < ApplicationRecord
   validates :account_type, presence: true, inclusion: { in: %w[asset liability] }
   validates :initial_balance, presence: true, numericality: true
 
-  enum :account_type, { asset: "asset", liability: "liability" }
+  enum :account_type, { asset: 0, liability: 1 }
 end
